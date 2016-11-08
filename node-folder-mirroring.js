@@ -4,13 +4,15 @@ var mknod = require('mknod');
 var pt = require('path');
 var statvfs = require('statvfs');
 
-if (process.argv.length != 4){
-    console.log("Usage: node mirror.js <original_folder> <mirror_folder>");
+if (process.argv.length != 6){
+    console.log("Usage: node mirror.js <original_folder> <mirror_folder> <uid> <gid>");
     process.exit(-1);
 }
 
 var original_folder = process.argv[2];
 var mirror_folder = process.argv[3];
+var uid = process.argv[4];
+var gid = process.argv[5];
 
 
 if (!pt.isAbsolute(original_folder) || !pt.isAbsolute(mirror_folder)){
@@ -18,7 +20,7 @@ if (!pt.isAbsolute(original_folder) || !pt.isAbsolute(mirror_folder)){
     process.exit(-1);
 }
 
-console.log("Mounting folder " + original_folder + " in folder " + mirror_folder);
+console.log("Mounting folder " + original_folder + " in folder " + mirror_folder + " with uid " + uid + " and gid " + gid);
 
     var getattr_function = function(path, cb){
         console.log('getattr(%s)',path);
@@ -338,9 +340,10 @@ fuse.mount(mirror_folder, {
     write: write_function,
     statfs: statfs_function, //(not available in fs, using statvfs module instead)
     //setxattr: setxattr_function (not available in fs or other implementations)
-    getxattr: getxattr_function //(not available in fs or other implementations, using lstat instead)
+    getxattr: getxattr_function, //(not available in fs or other implementations, using lstat instead)
     //listxattr: (not available in fuse-bindings)
     //removexattr: (not available in fuse-bindings)
+    options: ['uid='+uid, 'gid='+gid]
 });
 
 process.on('SIGINT', function () {
