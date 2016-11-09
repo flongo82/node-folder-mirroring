@@ -4,7 +4,7 @@ A FUSE filesystem for local directory mirroring written in Node.js.
 Usage: 
 
 ```
-$ sudo node node-folder-mirroring.js <source_dir> <target_dir> 
+$ sudo node node-folder-mirroring.js <source_dir> <target_dir> [-0 <option> ...]
 ```
 
 ## Mirroring the GPIO folder on a Raspberry PI 2
