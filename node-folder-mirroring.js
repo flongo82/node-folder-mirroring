@@ -3,24 +3,26 @@ var fs = require('fs');
 var mknod = require('mknod');
 var pt = require('path');
 var statvfs = require('statvfs');
+var argv = require('minimist')(process.argv.slice(2));
 
-if (process.argv.length != 6){
-    console.log("Usage: node mirror.js <original_folder> <mirror_folder> <uid> <gid>");
+if (argv._.length != 2){
+    console.log("Usage: node node-folder-mirroring.js <original_folder> <mirror_folder> [-o <option> ...]");
+    console.log("Note that additional fuse options can be passed using -o. See man mount.fuse for the available options.");
     process.exit(-1);
 }
 
-var original_folder = process.argv[2];
-var mirror_folder = process.argv[3];
-var uid = process.argv[4];
-var gid = process.argv[5];
-
+var original_folder = argv._[0];
+var mirror_folder = argv._[1];
+var fuse_options = argv.o;
 
 if (!pt.isAbsolute(original_folder) || !pt.isAbsolute(mirror_folder)){
     console.log("Please use absolute paths!");
     process.exit(-1);
 }
 
-console.log("Mounting folder " + original_folder + " in folder " + mirror_folder + " with uid " + uid + " and gid " + gid);
+console.log("Mounting folder " + original_folder + " in folder " + mirror_folder);
+if(fuse_options != undefined)
+    console.log("Fuse options: " + fuse_options);
 
     var getattr_function = function(path, cb){
         console.log('getattr(%s)',path);
@@ -343,7 +345,7 @@ fuse.mount(mirror_folder, {
     getxattr: getxattr_function, //(not available in fs or other implementations, using lstat instead)
     //listxattr: (not available in fuse-bindings)
     //removexattr: (not available in fuse-bindings)
-    options: ['uid='+uid, 'gid='+gid]
+    options: fuse_options
 });
 
 process.on('SIGINT', function () {
