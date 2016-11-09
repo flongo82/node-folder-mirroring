@@ -133,8 +133,8 @@ $ echo "4" > /sys/class/gpio/unexport
 $ mkdir -p /home/ubuntu/test_gpio_mirroring/sys/class/gpio
 $ mkdir /home/ubuntu/test_gpio_mirroring/sys/devices
 $ wget https://raw.githubusercontent.com/flongo82/node-folder-mirroring/master/node-folder-mirroring.js
-$ node node-folder-mirroring.js /sys/devices/ /home/ubuntu/test_gpio_mirroring/sys/devices/ -o uid=$UID -o gid=$UID &> log_devices &
-$ node node-folder-mirroring.js /sys/class/gpio/ /home/ubuntu/test_gpio_mirroring/sys/class/gpio/ -o uid=$UID -o gid=$UID &> log_gpio &
+$ node node-folder-mirroring.js /sys/devices/ /home/ubuntu/test_gpio_mirroring/sys/devices/ &> log_devices &
+$ node node-folder-mirroring.js /sys/class/gpio/ /home/ubuntu/test_gpio_mirroring/sys/class/gpio/ &> log_gpio &
 ```
 
 #### Test the mirror folder
