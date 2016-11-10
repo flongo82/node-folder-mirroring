@@ -10,6 +10,8 @@ $ sudo node node-folder-mirroring.js <source_dir> <target_dir> [-o <option> ...]
 ## Mirroring the GPIO folder on a Raspberry PI 2
 This tool has been tested on a Raspberry PI 2 Model B V1.1 with the aim of mirroring the GPIO folder. The tests have been performed with both the Raspbian Jessie Lite distribution and the Ubuntu 16.04 LTS distribution.
 
+Note that the fuse-bindings library on which we base our implementation does not support the poll() POSIX call. Thus, at the moment, it is not possible to wait for some event on a file descriptor. This means that, for example, the watch() call of the [onoff library](https://github.com/fivdi/onoff) does not currently work on the mirrored GPIO folder. 
+
 ### Raspbian Jessie Lite
 
 #### Update and upgrade the system:
