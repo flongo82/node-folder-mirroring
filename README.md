@@ -12,6 +12,8 @@ This tool has been tested on a Raspberry PI 2 Model B V1.1 with the aim of mirro
 
 Note that the fuse-bindings library on which we base our implementation does not support the poll() POSIX call. Thus, at the moment, it is not possible to wait for some event on a file descriptor. This means that, for example, the watch() call of the [onoff library](https://github.com/fivdi/onoff) does not currently work on the mirrored GPIO folder. 
 
+If you are interested in Raspberry Pi virtualization for Internet of Things and Fog/Edge scenarios, refer to https://github.com/flongo82/raspberry_virtualization for a more recent application of the code you can find here. 
+
 ### Raspbian Jessie Lite
 
 #### Update and upgrade the system:
